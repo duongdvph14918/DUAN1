@@ -150,6 +150,7 @@ private void init(){
         jToolBar1.add(jButton4);
         jToolBar1.add(jSeparator4);
 
+        jButton5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Diagram.png"))); // NOI18N
         jButton5.setText("Thống Kê");
         jButton5.setFocusable(false);
@@ -213,7 +214,7 @@ private void init(){
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 432, Short.MAX_VALUE))
+                .addGap(0, 448, Short.MAX_VALUE))
         );
 
         pack();
