@@ -6,7 +6,10 @@
 package VIEW;
 
 import DAO.NhanVienDAO;
+import MODEL.NhanVien;
+import Utils.Auth;
 import java.awt.Color;
+import static java.awt.Color.pink;
 import javax.swing.JOptionPane;
 
 /**
@@ -90,6 +93,11 @@ public class DangNhapJdiaLog extends javax.swing.JDialog {
         });
 
         jButton1.setText("Đăng nhập");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Thoát");
 
@@ -178,6 +186,38 @@ public class DangNhapJdiaLog extends javax.swing.JDialog {
 	    txtpas.setEchoChar('*');
 	}
     }//GEN-LAST:event_chkMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+	// TODO add your handling code here:
+if(checknull()){
+dangnhap();
+}
+    }//GEN-LAST:event_jButton1ActionPerformed
+    public void dangnhap() {
+	try {
+	    NhanVienDAO dao = new NhanVienDAO();
+	    String mmanv = txttendn.getText();
+	    String pass = new String(txtpas.getPassword());
+	    NhanVien nv = dao.selectByID(mmanv);
+	    if (nv != null) {
+		String matkhau = nv.getMATKHAU();
+		if (pass.equals(matkhau)) {
+		    Auth.user = nv;
+		    JOptionPane.showMessageDialog(this, "Đăng nhập thnành công");
+		    this.dispose();
+		} else {
+		    JOptionPane.showMessageDialog(this, "Sai mật khẩu");
+		}
+
+	    } else {
+		JOptionPane.showMessageDialog(this, "Saitk");
+
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    JOptionPane.showMessageDialog(this, "Lỗi truy vấn dữ liệu");
+	}
+    }
 
     /**
      * @param args the command line arguments
