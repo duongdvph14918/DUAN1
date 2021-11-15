@@ -5,17 +5,37 @@
  */
 package VIEW;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 /**
  *
  * @author Admin
  */
 public class ChaoJDialog extends javax.swing.JFrame {
-
+private  Timer t;
+private  ActionListener al;
     /**
      * Creates new form ChaoJDialog
      */
     public ChaoJDialog() {
 	initComponents();
+        setLocationRelativeTo(null);
+        al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(jProgressBar1.getValue()<100){
+                    jProgressBar1.setValue(jProgressBar1.getValue()+5);
+                }else{
+                    t.stop();
+                    dispose();
+                    
+                }
+            }
+        };
+        t = new Timer(200, al);
+        t.start();
     }
 
     /**
@@ -39,6 +59,7 @@ public class ChaoJDialog extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/FTP.png"))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Dự án 1 by Nhóm 6");
 
@@ -57,7 +78,7 @@ public class ChaoJDialog extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(258, 258, 258))
         );
         layout.setVerticalGroup(
@@ -66,10 +87,10 @@ public class ChaoJDialog extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
