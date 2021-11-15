@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  *
  * @author Admin
  */
-public class DKM extends javax.swing.JFrame {
+public class DoiMatKhauJdialog extends javax.swing.JFrame {
 
     NhanVienDAO daonv = new NhanVienDAO();
     List<NhanVien> lisst = daonv.selectAll();
@@ -25,7 +25,7 @@ public class DKM extends javax.swing.JFrame {
     /**
      * Creates new form DKM
      */
-    public DKM(java.awt.Frame parent, boolean modal,JTextField text) {
+    public DoiMatKhauJdialog(java.awt.Frame parent, boolean modal,JTextField text) {
 	
 	initComponents();
 	ma = text.getText();

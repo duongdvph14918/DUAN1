@@ -10,6 +10,8 @@ import MODEL.NhanVien;
 import Utils.Auth;
 import java.awt.Color;
 import static java.awt.Color.pink;
+import java.awt.event.KeyEvent;
+import javax.mail.Message;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,6 +34,7 @@ public class DangNhapJdiaLog extends javax.swing.JDialog {
 
     public boolean checknull() {
 	if (txttendn.getText().equals("") || txtpas.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane,"Vui lòng nhập đầy đủ thông tin !");
 	    txttendn.setBackground(Color.yellow);
 	    txtpas.setBackground(Color.yellow);
 	    return false;
@@ -71,12 +74,23 @@ public class DangNhapJdiaLog extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel3.setText("Tên đăng nhập :");
 
+        txttendn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txttendnKeyPressed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel4.setText("Mật Khẩu :");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Key New.png"))); // NOI18N
 
         txtpas.setText("jPasswordField1");
+        txtpas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtpasKeyPressed(evt);
+            }
+        });
 
         chk.setText("Show password");
         chk.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -193,6 +207,18 @@ if(checknull()){
 dangnhap();
 }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txttendnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttendnKeyPressed
+      if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+         dangnhap();
+      }
+    }//GEN-LAST:event_txttendnKeyPressed
+
+    private void txtpasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpasKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+         dangnhap();
+      }
+    }//GEN-LAST:event_txtpasKeyPressed
     public void dangnhap() {
 	try {
 	    NhanVienDAO dao = new NhanVienDAO();
@@ -210,7 +236,7 @@ dangnhap();
 		}
 
 	    } else {
-		JOptionPane.showMessageDialog(this, "Saitk");
+		JOptionPane.showMessageDialog(this, "Tài khoản không chính xác !");
 
 	    }
 	} catch (Exception e) {
