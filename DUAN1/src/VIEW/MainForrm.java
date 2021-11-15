@@ -29,6 +29,8 @@ public class MainForrm extends javax.swing.JFrame {
 	setExtendedState(MainForrm.MAXIMIZED_BOTH);
 	setLocationRelativeTo(null);
 	new DangNhapJdiaLog(this, true).setVisible(true);
+	ChaoJDialog chao = new ChaoJDialog();
+	chao.setVisible(true);
     }
 
     /**
@@ -292,11 +294,11 @@ public class MainForrm extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
 	// TODO add your handling code here:
-	if (Auth.islogin()) {
-	    new DoiMatKhauJdiaLog(this, true).setVisible(true);
-	} else {
-	    JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập");
-	}
+//	if (Auth.islogin()) {
+//	    new DoiMatKhauJdiaLog(this, true).setVisible(true);
+//	} else {
+//	    JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập");
+//	}
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
