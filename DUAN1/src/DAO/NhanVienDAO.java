@@ -23,37 +23,53 @@ import MODEL.NhanVien;
  * @author Admin
  */
 public class NhanVienDAO extends EduSysDAO<NhanVien, String> {
-
+    
+    String select_update = "update NhanVien set HoTen =? , DIENTHOAI =? , VAITRO =? where MANV =?";
+    String select_insert = "insert into NHANVIEN (MANV , HOTEN , DIENTHOAI, VAITRO) values (?,?,?,?)";
+    String delete_sql = "delete from NHANVIEN where MANV =?";
     String SELECT_ALL_SQL = "select * from NHANVIEN";
     String SELECT_BY_ID_SQL = "select * from NHANVIEN where MANV = ?";
-
+    
     public void updatemk(NhanVien entity) {
 	String sql = "UPDATE NHANVIEN set MATKHAU =? where MANV =?";
 	hepper.update(sql,
 		entity.getMATKHAU(),
 		entity.getMANV());
     }
-
+    
     @Override
     public void insert(NhanVien entity) {
-
+	try {
+	    hepper.update(select_insert,
+		    entity.getMANV(),
+		    entity.getHOTEN(),
+		    entity.getDIENTHOAI(),
+		    entity.isVAITRO());
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
-
+    
     @Override
     public void update(NhanVien entity) {
-
+	hepper.update(select_update,
+		entity.getHOTEN(),
+		entity.getDIENTHOAI(),
+		entity.isVAITRO(),
+		entity.getMANV());
+	
     }
-
+    
     @Override
-    public void delete(String key) {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(String id) {
+	hepper.update(delete_sql, id);
     }
-
+    
     @Override
     public List<NhanVien> selectAll() {
 	return this.selectBySQL(SELECT_ALL_SQL);
     }
-
+    
     @Override
     List<NhanVien> selectBySQL(String sql, Object... args) {
 	List<NhanVien> list = new ArrayList<>();
@@ -76,7 +92,7 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String> {
 	    throw new RuntimeException();
 	}
     }
-
+    
     @Override
     public NhanVien selectByID(String id) {
 	List<NhanVien> list = this.selectBySQL(SELECT_BY_ID_SQL, id);
@@ -85,5 +101,5 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String> {
 	}
 	return list.get(0);
     }
-
+    
 }

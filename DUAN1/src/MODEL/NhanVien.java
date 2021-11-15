@@ -14,9 +14,10 @@ public class NhanVien {
      private String HOTEN;
     private boolean GIOITINH ;
     private String DIENTHOAI;
+     private boolean VAITRO = false ;
     private String EMAIL;
     private String MATKHAU;
-    private boolean VAITRO ;
+   
 
     public NhanVien() {
     }
