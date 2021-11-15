@@ -8,21 +8,21 @@ package VIEW;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
-import VIEW.DangNhapJdiaLog;
+
 /**
  *
  * @author Admin
  */
-public class ChaoJDialog extends javax.swing.JFrame {
+public class chao1JDialog extends javax.swing.JDialog {
 private  Timer t;
 private  ActionListener al;
-DangNhapJdiaLog dn = new DangNhapJdiaLog(this, true);
     /**
-     * Creates new form ChaoJDialog
+     * Creates new form chao1JDialog
      */
-    public ChaoJDialog() {
+    public chao1JDialog(java.awt.Frame parent, boolean modal) {
+	super(parent, modal);
 	initComponents();
-        setLocationRelativeTo(null);
+	       setLocationRelativeTo(null);
         al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -31,13 +31,16 @@ DangNhapJdiaLog dn = new DangNhapJdiaLog(this, true);
                 }else{
                     t.stop();
                     dispose();
-                    dn.setVisible(true);
+                  
                 }
             }
         };
         t = new Timer(200, al);
         t.start();
     }
+ 
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,16 +51,11 @@ DangNhapJdiaLog dn = new DangNhapJdiaLog(this, true);
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/fpt.png"))); // NOI18N
-        jLabel2.setText("jLabel1");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(243, 243, 243));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
@@ -74,7 +72,7 @@ DangNhapJdiaLog dn = new DangNhapJdiaLog(this, true);
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,27 +110,33 @@ DangNhapJdiaLog dn = new DangNhapJdiaLog(this, true);
 		}
 	    }
 	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(ChaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(chao1JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(ChaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(chao1JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(ChaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(chao1JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-	    java.util.logging.Logger.getLogger(ChaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(chao1JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	}
 	//</editor-fold>
 
-	/* Create and display the form */
+	/* Create and display the dialog */
 	java.awt.EventQueue.invokeLater(new Runnable() {
 	    public void run() {
-		new ChaoJDialog().setVisible(true);
+		chao1JDialog dialog = new chao1JDialog(new javax.swing.JFrame(), true);
+		dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent e) {
+			System.exit(0);
+		    }
+		});
+		dialog.setVisible(true);
 	    }
 	});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JProgressBar jProgressBar1;
     // End of variables declaration//GEN-END:variables

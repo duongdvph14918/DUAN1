@@ -27,10 +27,11 @@ public class MainForrm extends javax.swing.JFrame {
     
     private void init() {
 	setExtendedState(MainForrm.MAXIMIZED_BOTH);
-	setLocationRelativeTo(null);
+	new chao1JDialog(this, true).setVisible(true);
 	new DangNhapJdiaLog(this, true).setVisible(true);
-	ChaoJDialog chao = new ChaoJDialog();
-	chao.setVisible(true);
+
+	setLocationRelativeTo(null);
+	
     }
 
     /**
