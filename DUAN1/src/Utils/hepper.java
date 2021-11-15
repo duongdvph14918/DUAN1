@@ -19,7 +19,7 @@ public class hepper {
  static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     static String dburl="jdbc:sqlserver://localhost:1433;databaseName=DUAN1";
     static String user = "sa";
-    static String pass = "1";
+    static String pass = "123";
     static {
         try {
             Class.forName(driver);
