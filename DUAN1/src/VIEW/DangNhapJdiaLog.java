@@ -188,8 +188,9 @@ public class DangNhapJdiaLog extends javax.swing.JDialog {
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
 	// TODO add your handling code here:
 	Sencode qmk = new Sencode();
-	this.setVisible(false);
+	
 	qmk.setVisible(true);
+	dispose();
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void chkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkMouseClicked

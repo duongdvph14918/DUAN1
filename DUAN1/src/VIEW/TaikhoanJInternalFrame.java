@@ -188,6 +188,10 @@ public class TaikhoanJInternalFrame extends javax.swing.JInternalFrame {
         tblbang = new javax.swing.JTable();
         txtmanv = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Quản Lý tài khoản");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

@@ -188,7 +188,7 @@ public class Sencode extends javax.swing.JFrame {
 		    JOptionPane.showMessageDialog(this, "code bạn nhập không đúng");
 
 		} else {
-		    DoiMatKhauJdialog dk = new DoiMatKhauJdialog(this,true,txtten);
+		    dmksendcode dk = new dmksendcode(this,true,txtten);
 		    this.setVisible(false);
 		    dk.setVisible(true);
 		    

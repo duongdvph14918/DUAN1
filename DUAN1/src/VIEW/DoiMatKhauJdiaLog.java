@@ -15,18 +15,19 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class DoiMatKhauJdiaLog extends javax.swing.JDialog {
-    
+public class DoimatkhaujdiaLog extends javax.swing.JDialog {
+
     NhanVienDAO dao = new NhanVienDAO();
 
     /**
-     * Creates new form DoiMatKhauJdiaLog
+     * Creates new form DoimatkhaujdiaLog
      */
-    public DoiMatKhauJdiaLog(java.awt.Frame parent, boolean modal) {
+    public DoimatkhaujdiaLog(java.awt.Frame parent, boolean modal) {
 	super(parent, modal);
 	initComponents();
-	this.setLocationRelativeTo(null);
+	setLocationRelativeTo(null);
 	txtMaNV.setText(Auth.user.getMANV());
+	txtMaNV.setEditable(false);
     }
 
     /**
@@ -38,10 +39,6 @@ public class DoiMatKhauJdiaLog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnXacNhan = new javax.swing.JButton();
         txtMaNV = new javax.swing.JTextField();
@@ -49,8 +46,27 @@ public class DoiMatKhauJdiaLog extends javax.swing.JDialog {
         txtMatKhau = new javax.swing.JPasswordField();
         txtMatKhauMoi = new javax.swing.JPasswordField();
         txtXacNhanMKM = new javax.swing.JPasswordField();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel4.setText("Mật khẩu mới");
+
+        btnXacNhan.setBackground(new java.awt.Color(51, 51, 255));
+        btnXacNhan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnXacNhan.setForeground(new java.awt.Color(255, 255, 255));
+        btnXacNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Safe.png"))); // NOI18N
+        btnXacNhan.setText("Xác nhận");
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Xác nhận mật khẩu mới");
 
         jButton2.setBackground(new java.awt.Color(255, 153, 0));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -71,21 +87,6 @@ public class DoiMatKhauJdiaLog extends javax.swing.JDialog {
         jLabel2.setText("Tên đăng nhập");
 
         jLabel3.setText("Mật khẩu hiện tại");
-
-        jLabel4.setText("Mật khẩu mới");
-
-        btnXacNhan.setBackground(new java.awt.Color(51, 51, 255));
-        btnXacNhan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnXacNhan.setForeground(new java.awt.Color(255, 255, 255));
-        btnXacNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Safe.png"))); // NOI18N
-        btnXacNhan.setText("Xác nhận");
-        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacNhanActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Xác nhận mật khẩu mới");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,7 +116,7 @@ public class DoiMatKhauJdiaLog extends javax.swing.JDialog {
                                 .addComponent(jLabel3)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5)))))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,38 +149,42 @@ public class DoiMatKhauJdiaLog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-	
-	this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
 	if (utilityHelper.checkpass(txtMatKhau)
 		&& utilityHelper.checkpass(txtMatKhauMoi)
 		&& utilityHelper.checkpass(txtXacNhanMKM)) {
-	    dangnhap();
+	    doiMatKhau();
 	}
     }//GEN-LAST:event_btnXacNhanActionPerformed
-    public void dangnhap() {
-	String mk = new String(txtMatKhau.getPassword());
-	String mkm = new String(txtMatKhauMoi.getPassword());
-	String xacnhanmk = new String(txtXacNhanMKM.getPassword());
-	if (mk.equals(Auth.user.getMATKHAU())) {
-	    if (mkm.equals(xacnhanmk)) {
-		Auth.user.setMATKHAU(mkm);
-		dao.updatemk(Auth.user);
-		JOptionPane.showMessageDialog(this, "đổi mật khẩu thành công");
-		dispose();
-	    } else {
-		txtXacNhanMKM.setBackground(Color.yellow);
-		JOptionPane.showMessageDialog(this, "Xác nhận mật khẩu mới không trùng mật khẩu mới");
-		return;
+    void doiMatKhau() {
+	try {
+	    String matkhau = new String(txtMatKhau.getPassword());
+	    String matkhaumoi = new String(txtMatKhauMoi.getPassword());
+	    String xacnhanmatkhau = new String(txtXacNhanMKM.getPassword());
+	    {
+		if (matkhau.equals(Auth.user.getMATKHAU())) {
+		    if (matkhaumoi.equals(xacnhanmatkhau)) {
+			Auth.user.setMATKHAU(matkhaumoi);
+			dao.updatemk(Auth.user);
+			JOptionPane.showMessageDialog(this, "ĐỔi mật khẩu thành công");
+			dispose();
+		    } else {
+			txtMatKhauMoi.setBackground(Color.yellow);
+			JOptionPane.showMessageDialog(this, "Mật khẩu xác nhận không trùng mật khẩu mới");
+		    }
+		} else {
+		    txtMatKhau.setBackground(Color.yellow);
+		    JOptionPane.showMessageDialog(this, "Mật khẩu cũ không chính xác");
+		}
 	    }
-	} else {
-	    txtMatKhau.setBackground(Color.yellow);
-	    JOptionPane.showMessageDialog(this, "Mật khẩu cũ không đúng");
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
     }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+	
+	this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,20 +203,20 @@ public class DoiMatKhauJdiaLog extends javax.swing.JDialog {
 		}
 	    }
 	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(DoiMatKhauJdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(DoimatkhaujdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(DoiMatKhauJdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(DoimatkhaujdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(DoiMatKhauJdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(DoimatkhaujdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-	    java.util.logging.Logger.getLogger(DoiMatKhauJdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(DoimatkhaujdiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	}
 	//</editor-fold>
 
 	/* Create and display the dialog */
 	java.awt.EventQueue.invokeLater(new Runnable() {
 	    public void run() {
-		DoiMatKhauJdiaLog dialog = new DoiMatKhauJdiaLog(new javax.swing.JFrame(), true);
+		DoimatkhaujdiaLog dialog = new DoimatkhaujdiaLog(new javax.swing.JFrame(), true);
 		dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent e) {

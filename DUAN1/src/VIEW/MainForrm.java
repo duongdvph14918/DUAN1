@@ -29,7 +29,6 @@ public class MainForrm extends javax.swing.JFrame {
 	setExtendedState(MainForrm.MAXIMIZED_BOTH);
 	new chao1JDialog(this, true).setVisible(true);
 	new DangNhapJdiaLog(this, true).setVisible(true);
-
 	setLocationRelativeTo(null);
 	
     }
@@ -300,34 +299,39 @@ public class MainForrm extends javax.swing.JFrame {
 //	} else {
 //	    JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập");
 //	}
+	if (Auth.islogin()) {
+	    new DoimatkhaujdiaLog(this, true).setVisible(true);
+	} else {
+	    JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập");
+	}
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        if (Auth.islogin()) {
-            TaikhoanJInternalFrame dao = new TaikhoanJInternalFrame();
-            openX(dao);
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập");
-        }
+	// TODO add your handling code here:
+	if (Auth.islogin()) {
+	    TaikhoanJInternalFrame dao = new TaikhoanJInternalFrame();
+	    openX(dao);
+	} else {
+	    JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập");
+	}
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        Auth.clean();
-        new DangNhapJdiaLog(this, true).setVisible(true);
+	// TODO add your handling code here:
+	Auth.clean();
+	new DangNhapJdiaLog(this, true).setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
