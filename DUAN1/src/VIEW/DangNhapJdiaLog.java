@@ -74,6 +74,7 @@ public class DangNhapJdiaLog extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel3.setText("Tên đăng nhập :");
 
+        txttendn.setText("nv01");
         txttendn.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txttendnKeyPressed(evt);
@@ -85,7 +86,7 @@ public class DangNhapJdiaLog extends javax.swing.JDialog {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Key New.png"))); // NOI18N
 
-        txtpas.setText("jPasswordField1");
+        txtpas.setText("123");
         txtpas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtpasKeyPressed(evt);
