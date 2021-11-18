@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/VIEW/findJdialog.java</file>
             <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/DAO/NhanVienDAO.java</file>
             <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/VIEW/SanPhamform.java</file>
-            <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/Utils/XImage.java</file>
-            <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/VIEW/TaikhoanJInternalFrame.java</file>
+            <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/MODEL/LoaiHang.java</file>
+            <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/Utils/hepper.java</file>
             <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/MODEL/SanPham.java</file>
-            <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/DAO/SanPhamDAO.java</file>
-            <file>file:/D:/Desktop/DUAN1/DUAN1/DUAN1/src/VIEW/MainForrm.java</file>
         </group>
     </open-files>
 </project-private>

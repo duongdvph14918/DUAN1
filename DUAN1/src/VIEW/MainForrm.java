@@ -27,7 +27,7 @@ public class MainForrm extends javax.swing.JFrame {
     
     private void init() {
 	setExtendedState(MainForrm.MAXIMIZED_BOTH);
-	new chao1JDialog(this, true).setVisible(true);
+//	new chao1JDialog(this, true).setVisible(true);
 	new DangNhapJdiaLog(this, true).setVisible(true);
 	setLocationRelativeTo(null);
 	

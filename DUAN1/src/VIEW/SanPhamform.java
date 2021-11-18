@@ -8,13 +8,20 @@ package VIEW;
 import DAO.SanPhamDAO;
 import MODEL.NhanVien;
 import MODEL.SanPham;
+import Utils.Auth;
 import Utils.XImage;
 import java.awt.Image;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.STItemType;
@@ -28,12 +35,12 @@ public class SanPhamform extends javax.swing.JInternalFrame {
     SanPhamDAO dao = new SanPhamDAO();
     int index;
     JFileChooser filchoos = new JFileChooser();
+
     /**
      * Creates new form SanPhamform
      */
     public SanPhamform() {
 	initComponents();
-	filltotable();
     }
 
     void filltotable() {
@@ -50,7 +57,8 @@ public class SanPhamform extends javax.swing.JInternalFrame {
 		    sp.getMANSX(),
 		    sp.getMANHAPHANPHOI(),
 		    sp.getSOLUONG(),
-		    sp.getDONGIA(), sp.getHINH()
+		    sp.getDONGIA(),
+		    sp.getHINH()
 		};
 		model.addRow(row);
 	    }
@@ -78,7 +86,7 @@ public class SanPhamform extends javax.swing.JInternalFrame {
             void setIcon(ImageIcon icon) set Icon cho lbl
 	     */
 	} else {
-//	lblanh.setIcon(XImage.read("no name.png"));
+	    lblanh.setIcon(XImage.read("no name.png"));
 	    lblanh.setToolTipText("no hình");
 	}
     }
@@ -87,9 +95,9 @@ public class SanPhamform extends javax.swing.JInternalFrame {
 	SanPham sp = new SanPham();
 	sp.setMASP(txtmasanpham.getText());
 	sp.setTENSP(txtténanpham.getText());
-	sp.setMALH(cbomaloaiihang.getSelectedItem()+"");
-	sp.setMANSX(cbonhass.getSelectedItem()+"");
-	sp.setMANHAPHANPHOI(cbonhapp.getSelectedItem()+"");
+	sp.setMALH(cbomaloaiihang.getSelectedItem() + "");
+	sp.setMANSX(cbonhass.getSelectedItem() + "");
+	sp.setMANHAPHANPHOI(cbonhapp.getSelectedItem() + "");
 	sp.setSOLUONG(Integer.valueOf(txtsoluong.getText()));
 	sp.setDONGIA(Double.valueOf(txtdongia.getText()));
 	sp.setHINH(lblanh.getToolTipText()); //lấy tên hình
@@ -98,39 +106,116 @@ public class SanPhamform extends javax.swing.JInternalFrame {
 
     public void showdetail() {
 	try {
-	    TableModel model = tblbang.getModel();
-	    cbomaloaiihang.removeAllItems();
-	    cbonhass.removeAllItems();
-	    cbonhapp.removeAllItems();
-	    txtmasanpham.setText(model.getValueAt(index, 0).toString());
-	    txtténanpham.setText(model.getValueAt(index, 1).toString());
-	    cbomaloaiihang.addItem(model.getValueAt(index, 2).toString());
-	    cbonhass.addItem(model.getValueAt(index, 3).toString());
-	    cbonhapp.addItem(model.getValueAt(index, 4).toString());
-	    txtsoluong.setText(model.getValueAt(index, 5).toString());
-	    txtdongia.setText(model.getValueAt(index, 6).toString());
-	    ImageIcon icon = new ImageIcon(model.getValueAt(index, 7).toString());
-	    lblanh.setIcon(icon);
+	    String masx = tblbang.getValueAt(index, 0).toString();
+	    SanPham model = dao.selectByID(masx);
+	    if (model != null) {
+		setform(model);
+	    }
 	    tblbang.setRowSelectionInterval(index, index);
 	} catch (Exception e) {
 	}
     }
-void chonanh(){
-       if(filchoos.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-       File file = filchoos.getSelectedFile();
-       XImage.save(file);
-       try {
-	   Image    img = ImageIO.read(file);
-	   int height = lblanh.getWidth();
-	   int widt = lblanh.getHeight();
-	   lblanh.setIcon(new  ImageIcon(img.getScaledInstance(height, widt, 0)));
-	   } catch (Exception e) {
-	   }
-       }
-}
-void loadcbo(){
 
-}
+    void chonanh() {
+	if (filchoos.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+	    File file = filchoos.getSelectedFile();
+	    XImage.save(file);
+	    try {
+		Image img = ImageIO.read(file);
+		int height = lblanh.getWidth();
+		int widt = lblanh.getHeight();
+		lblanh.setIcon(new ImageIcon(img.getScaledInstance(height, widt, 0)));
+	    } catch (Exception e) {
+	    }
+	    lblanh.setToolTipText(file.getName());
+	}
+    }
+
+    void loadmaloaihang() {
+	DefaultComboBoxModel model = (DefaultComboBoxModel) cbomaloaiihang.getModel();
+	
+	try {
+	    List<SanPham> list = dao.selectAll();
+	    for (SanPham sp : list) {
+		model.addElement(sp.getMALH());
+	    }
+	} catch (Exception e) {
+	}
+    }
+
+    void loadnhapp() {
+	DefaultComboBoxModel model = (DefaultComboBoxModel) cbonhapp.getModel();
+	
+	try {
+	    List<SanPham> list = dao.selectAll();
+	    for (SanPham sp : list) {
+		model.addElement(sp.getMANHAPHANPHOI());
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    void loadnhasx() {
+	DefaultComboBoxModel model = (DefaultComboBoxModel) cbonhass.getModel();
+	
+	try {
+	    List<SanPham> list = dao.selectAll();
+	    for (SanPham sp : list) {
+		model.addElement(sp.getMANSX());
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    void clear() {
+	SanPham sp = new SanPham();
+	setform(sp);
+	index = -1;
+    }
+
+    void delete() {
+	if (!Auth.ismaneger()) {
+	    JOptionPane.showMessageDialog(this, "Bạn không có quyền xóa");
+	} else {
+	    String ma = txtmasanpham.getText();
+	    try {
+		dao.delete(ma);
+		filltotable();
+		clear();
+		JOptionPane.showMessageDialog(this, "Xóa thành công");
+	    } catch (Exception e) {
+		JOptionPane.showMessageDialog(this, "Xóa thất bại");
+	    }
+
+	}
+    }
+
+    void insert() {
+	SanPham sp = getform();
+	try {
+	    dao.insert(sp);
+	    filltotable();
+	    clear();
+	    JOptionPane.showMessageDialog(this, "Thêm thành công");
+	} catch (Exception e) {
+	    JOptionPane.showMessageDialog(this, "trùng mã");
+	}
+    }
+
+    void update() {
+	SanPham sp = getform();
+	try {
+	    dao.update(sp);
+	    filltotable();
+	    clear();
+	    JOptionPane.showMessageDialog(this, "Sử thành công");
+	} catch (Exception e) {
+	    JOptionPane.showMessageDialog(this, "Sửa thất bại");
+	}
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,6 +262,23 @@ void loadcbo(){
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(0, 51, 204))); // NOI18N
 
@@ -254,8 +356,24 @@ void loadcbo(){
         jLabel12.setText("Mã nhà pp");
 
         cbonhass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbonhass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbonhassActionPerformed(evt);
+            }
+        });
+
+        cbonhapp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbonhappActionPerformed(evt);
+            }
+        });
 
         cbomaloaiihang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbomaloaiihang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbomaloaiihangActionPerformed(evt);
+            }
+        });
 
         tblbang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -285,15 +403,35 @@ void loadcbo(){
 
         btnthem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Add.png"))); // NOI18N
         btnthem.setText("Thêm");
+        btnthem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnthemActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Edit.png"))); // NOI18N
         jButton2.setText("Sủa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         btnxoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Delete.png"))); // NOI18N
         btnxoa.setText("Xóa");
+        btnxoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxoaActionPerformed(evt);
+            }
+        });
 
         btnmoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Refresh-icon.png"))); // NOI18N
         btnmoi.setText("Mới");
+        btnmoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmoiActionPerformed(evt);
+            }
+        });
 
         btntruoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/lui.png"))); // NOI18N
         btntruoc.addActionListener(new java.awt.event.ActionListener() {
@@ -489,9 +627,63 @@ void loadcbo(){
     }//GEN-LAST:event_btnsauActionPerformed
 
     private void lblanhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblanhMouseClicked
-        // TODO add your handling code here:
+	// TODO add your handling code here:
 	chonanh();
     }//GEN-LAST:event_lblanhMouseClicked
+
+    private void cbomaloaiihangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbomaloaiihangActionPerformed
+	// TODO add your handling code here:
+	loadmaloaihang();
+    }//GEN-LAST:event_cbomaloaiihangActionPerformed
+
+    private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
+	// TODO add your handling code here:
+	insert();
+    }//GEN-LAST:event_btnthemActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+	// TODO add your handling code here:
+//	loadmaloaihang();
+//	loadnhasx();
+//	loadnhapp();
+	filltotable();
+//	cbomaloaiihang.removeAllItems();
+//	cbonhapp.removeAllItems();
+//	cbonhass.removeAllItems();
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void btnxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoaActionPerformed
+	// TODO add your handling code here:
+	int hoi = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa không ");
+	if (hoi != JOptionPane.YES_NO_OPTION) {
+	    if (Auth.user.isVAITRO()) {
+		delete();
+	    } else {
+		JOptionPane.showMessageDialog(this, "Chỉ quản lý được xóa");
+	    }
+	}
+
+    }//GEN-LAST:event_btnxoaActionPerformed
+
+    private void btnmoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmoiActionPerformed
+	// TODO add your handling code here:
+	clear();
+    }//GEN-LAST:event_btnmoiActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+	// TODO add your handling code here:
+	update();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbonhassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbonhassActionPerformed
+	// TODO add your handling code here:
+	loadnhasx();
+    }//GEN-LAST:event_cbonhassActionPerformed
+
+    private void cbonhappActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbonhappActionPerformed
+	// TODO add your handling code here:
+	loadnhapp();
+    }//GEN-LAST:event_cbonhappActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

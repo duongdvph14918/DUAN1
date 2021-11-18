@@ -96,5 +96,9 @@ public class SanPham {
     public void setDONGIA(double DONGIA) {
 	this.DONGIA = DONGIA;
     }
+
+    public SanPham(String MANSX) {
+	this.MANSX = MANSX;
+    }
        
 }
